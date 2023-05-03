@@ -10,9 +10,8 @@ function Header() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto justify-content-end">
           <Nav.Link href="#">Home</Nav.Link>
-          <Nav.Link href="#">Cars</Nav.Link>
-          <Nav.Link href="#">About Us</Nav.Link>
-          <Nav.Link href="#">Contact</Nav.Link>
+          <Nav.Link href="/Header">Cars</Nav.Link>
+         
         </Nav>
       </Navbar.Collapse>
     </Navbar>
