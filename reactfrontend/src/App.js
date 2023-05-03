@@ -4,23 +4,24 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 // import Header from "./components/Header";
 import Registration from "./component/Registration";
 import Login from "./component/Login";
-import Home from "./component/Home";
+import Header from "./component/Header";
+
 import Dashboard from "./component/Dashboard";
 import Admin from "./component/Admin";
 import CarTable from "./component/CarTable";
 import CreateCar from "./component/CreateCar";
 import CarEdit from "./component/CarEdit";
-import Navigation from './component/Navigation';
+// import Navigation from './component/Navigation';
 import Rent from "./component/Rent";
 
 const App = () => {
   return (
   
     <BrowserRouter>
-     <Navigation />
+     {/* <Navigation /> */}
        
     <Routes>
-    <Route  path="Home" element={<Home />} />
+    <Route path="/Header" element={<Header />} />
             <Route path="/Registration" element={<Registration />}/>
             <Route path="/Login" element={<Login />} />
             <Route path="/Dashboard" element={<Dashboard />} />

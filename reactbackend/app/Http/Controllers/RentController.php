@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Rental;
+use App\Models\Rent;
 
 class RentController extends Controller
 {
 
     public function create(Request $request)
     {
-        $rental = new Rental([
+        $rental = new Rent([
             'rental_date' => $request->input('rental_date'),
             'return_date' => $request->input('return_date'),
             'price' => $request->input('price'),
@@ -32,7 +32,7 @@ class RentController extends Controller
             'car_id' => 'required|exists:cars,id',
         ]);
 
-        $rental = new Rental([
+        $rental = new Rent([
             'rental_date' => $validatedData['rental_date'],
             'return_date' => $validatedData['return_date'],
             'price' => $validatedData['price'],
@@ -48,7 +48,7 @@ class RentController extends Controller
 
     public function update(Request $request, $id)
     {
-        $rental = Rental::find($id);
+        $rental = Rent::find($id);
         $rental->rental_date = $request->input('rental_date');
         $rental->return_date = $request->input('return_date');
         $rental->price = $request->input('price');
@@ -60,7 +60,7 @@ class RentController extends Controller
 
   function delete($id)
     {
-        $rental = Rental::find($id);
+        $rental = Rent::find($id);
         $rental->delete();
         return response()->json(null, 204);
     }

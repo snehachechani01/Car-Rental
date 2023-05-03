@@ -1,18 +1,25 @@
-import React from "react";
-import Navigation from "./Navigation";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Header = () => {
+const HomePage = () => {
   return (
-    <header>
-      <Navigation />
-      <div className="jumbotron jumbotron-fluid">
-        <div className="container">
-          <h1 className="display-4">Welcome to Car Rental</h1>
-          <p className="lead">Rent a car for every occasion</p>
-        </div>
-      </div>
-    </header>
+    <div>
+      <header>
+        <nav>
+          <ul>
+            <li>
+              <Link to='/Registration'>Sign Up</Link>
+            </li>
+            <li>
+              <Link to='/Login'>Login</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <h1>Welcome to my App!</h1>
+      <p>Please choose an option below:</p>
+    </div>
   );
 };
 
-export default Header;
+export default HomePage;

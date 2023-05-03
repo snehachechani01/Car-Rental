@@ -24,7 +24,7 @@ Route::post('/login', [UserController::class ,'login']);
 Route::get('/cars', [CarController::class,'index']);
 Route::post('/cars', [CarController::class,'store']);
 Route::get('/cars/{id}', [CarController::class,'edit']);
-Route::put('/cars/{id}/edit', [CarController::class,'update']);
+Route::any('/cars/{id}/edit', [CarController::class,'update']);
 Route::delete('/cars/{id}', [CarController::class,'destroy']);
 Route::post('/rentals', [RentController::class, 'store']);
 

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
+import './Dashboard.css';
+import Navigation from './Navigation';
 
 function Home() {
   const [cars, setCars] = useState([]);
@@ -12,25 +13,10 @@ function Home() {
       .then(data => setCars(data))
       .catch(error => console.log(error));
   }, []);
+
   return (
-    <div>
-      <header>
-        <Container>
-          <Row>
-            <Col md={8}>
-              <nav>
-                {/* <ul>
-                  <li><a href="#">Home</a></li>
-                  <li><a href="#">Cars</a></li>
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">Contact Us</a></li>
-                  <li><Button variant="primary">Book Now</Button></li>
-                </ul> */}
-              </nav>
-            </Col>
-          </Row>
-        </Container>
-      </header>
+    <div className="home">
+      <Navigation />
       <Carousel>
         <Carousel.Item>
           <img
@@ -54,49 +40,75 @@ function Home() {
           />
         </Carousel.Item>
       </Carousel>
-      <Container>
-        <Row>
+      <Container className='mt-5'>
+      <Row xs={1} sm={2} md={4} className="g-4">
           {/* Loop through cars and display each one */}
           {cars.map((car) => (
-            <Col md={4} key={car.id}>
-              <img
-                src={`http://localhost:8000/storage/images/${car.photo}`}
-                alt={car.name}
-                className="img-fluid"
-              />
-              <h3>{car.name}</h3>
-              <p>{car.description}</p>
-              <Button variant="primary" href="/rent">
-                Rent Now
-              </Button>
-            </Col>
+      <Col md={4} key={car.id}>
+      <div className="car-box">
+        <img
+          src={`http://localhost:8000/storage/images/${car.photo}`}
+          alt={car.name}
+          className="car-image"
+        />
+        <div className="car-details">
+          <h3>{car.name}</h3>
+          <p>{car.description}</p>
+          <Button
+            variant="primary"
+            onClick={() => {
+              localStorage.setItem('price', car.price);
+              localStorage.setItem('carId', car.id);
+              window.location.href = '/rent';
+            }}
+          >
+            Rent Now
+          </Button>
+        </div>
+      </div>
+    </Col>
           ))}
         </Row>
       </Container>
-      <footer>
-        <Container>
-          <Row>
-            <Col md={6}>
-              <p>© 2023 Car Rental. All rights reserved.</p>
-            </Col>
-            <Col md={6}>
-              <nav>
-                <ul>
-                  <li>
-                    <a href="#">Terms & Conditions</a>
-                  </li>
-                  <li>
-                    <a href="#">Privacy Policy</a>
-                  </li>
-                  <li>
-                    <a href="#">FAQs</a>
-                  </li>
-                </ul>
-              </nav>
-            </Col>
-          </Row>
-        </Container>
-      </footer>
+    
+      <footer className="footer">
+                <div className="footer-col">
+                    <h3>GET TO KNOW US</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Releases</a></li>
+                    </ul>
+                </div>
+                <div className="footer-col">
+                    <h3>CONNECT WITH US</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+                <div className="footer-col">
+                    <h3>CONSUMER POLICY</h3>
+                    <ul>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Terms Of Use</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+                <div className="footer-col">
+                    <h3>HELP</h3>
+                    <ul>
+                        <li><a href="#">Payments</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+                <div className="copyright">
+                <p>© Copyright 2023 My Shop. All rights reserved.</p>
+                </div>
+            </footer>
+
     </div>
   );
 }

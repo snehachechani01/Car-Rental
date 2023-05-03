@@ -12,8 +12,9 @@ const EditCar = () => {
     price: '',
     fuelType: '',
     gearbox: '',
-    photo: null, // initialize photo as null
+    photo: '' // initialize photo as null
   });
+  const [photo, setPhoto] = useState(null); 
 
   useEffect(() => {
     axios
@@ -42,7 +43,7 @@ const EditCar = () => {
     formData.append('gearbox', car.gearbox);
     formData.append('photo', car.photo); 
     axios
-      .put(`http://localhost:8000/api/cars/${carId}/edit`, car)
+      .post(`http://localhost:8000/api/cars/${carId}/edit`, car)
       .then((response) => {
         console.log(response);
         // Navigate to the CarList component
@@ -107,10 +108,10 @@ const EditCar = () => {
             onChange={handleChange}
           />
         </div>
-        {/* <div>
+        <div>
         <label htmlFor="photo">Car Photo:</label>
         <input type="file" id="photo" name="photo" onChange={(e) => setPhoto(e.target.files[0])} required />
-      </div> */}
+      </div>
         <button type="submit">Save Changes</button>
       </form>
     </div>

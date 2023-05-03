@@ -21,7 +21,7 @@ class CreateCarTable extends Migration
             $table->decimal('price');
             $table->string('fuelType');
             $table->string('gearbox');
-            $table->boolean('availability')->default(true);
+            $table->boolean('availability');
             $table->timestamps();
         });
     }

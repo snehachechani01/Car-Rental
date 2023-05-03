@@ -42,16 +42,28 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $user = $request->user();
 
-            return response()->json([
-                'message' => 'Login successful',
-                'user_id' => $user->id,
-            ]);
+            if ($user->isAdmin) {
+                return response()->json([
+                    'message' => 'Login successful',
+                    'user_id' => $user->id,
+                    'isAdmin'=>true
+                ]);
+            }
+            else{
+
+                return response()->json([
+                    'message' => 'Login successful',
+                    'user_id' => $user->id,
+                ]);
+            }
+
         }
 
         return response()->json([
             'message' => 'Invalid credentials',
         ], 401);
     }
+
 
 
 
