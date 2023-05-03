@@ -21,7 +21,7 @@ const App = () => {
      {/* <Navigation /> */}
        
     <Routes>
-    <Route path="/Header" element={<Header />} />
+    <Route index element={<Header />} />
             <Route path="/Registration" element={<Registration />}/>
             <Route path="/Login" element={<Login />} />
             <Route path="/Dashboard" element={<Dashboard />} />
