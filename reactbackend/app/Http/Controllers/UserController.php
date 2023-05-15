@@ -2,69 +2,69 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Http\Request;
-
-use App\Models\User;
-use Validator;
-
-class UserController extends Controller
+class RegistrationControllerler extends Controller
 {
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:15',
-            'email' => 'required|string|email|unique:users|max:20',
-            'password' => 'required|string|min:6|max:25',
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+
+        if (!$data) {
+            return response()->json(['success' => false, 'message' => $data->errors()], 422);
         }
 
-        $user = new User;
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
 
-        if ($user->save()) {
-            return response()->json(['success' => true, 'user' => $user], 201);
-        } else {
-            return response()->json(['success' => false, 'message' => 'User registration failed'], 500);
-        }
+        DB::table('users')->insert([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'User registered successfully.']);
+
     }
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        // Validate the user input
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
 
-        if (Auth::attempt($credentials)) {
-            $user = $request->user();
-
-            if ($user->isAdmin) {
-                return response()->json([
-                    'message' => 'Login successful',
-                    'user_id' => $user->id,
-                    'isAdmin'=>true
-                ]);
+        // Attempt to authenticate the user
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+            // Authentication was successful
+            $user = Auth::user();
+            if ($user->is_admin) {
+                session(['user_id' => $user->id]);
+                return response()->json(['success' => true, 'message' => 'Login successfully.',  'user_id' => $user->id, 'role' => 'admin']);
+            } else {
+                session(['user_id' => $user->id]);
+                return response()->json(['success' => true, 'message' => 'Login successfully.', 'user_id' => $user->id, 'role' => 'user']);
             }
-            else{
-
-                return response()->json([
-                    'message' => 'Login successful',
-                    'user_id' => $user->id,
-                ]);
-            }
-
+        } else {
+            // Authentication failed
+            return response()->json(['success' => false, 'message' => 'Login Failed.']);
         }
-
-        return response()->json([
-            'message' => 'Invalid credentials',
-        ], 401);
     }
 
 
+    public function logout()
+    {
+        session()->flush();
+        Auth::logout();
+
+        return response()->json(['success' => true, 'message' => 'Logout successfully.']);
+    }
 
 
 }

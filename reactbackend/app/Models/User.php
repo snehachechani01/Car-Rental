@@ -2,74 +2,43 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as AuthenticatableUser;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends AuthenticatableUser implements Authenticatable
+class User extends Authenticatable
 {
-    use HasFactory;
-
-    // your model properties and methods here
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
-     * Get the name of the unique identifier for the user.
+     * The attributes that are mass assignable.
      *
-     * @return string
+     * @var array<int, string>
      */
-    public function getAuthIdentifierName()
-    {
-        return 'id';
-    }
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
 
     /**
-     * Get the unique identifier for the user.
+     * The attributes that should be hidden for serialization.
      *
-     * @return mixed
+     * @var array<int, string>
      */
-    public function getAuthIdentifier()
-    {
-        return $this->getKey();
-    }
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     /**
-     * Get the password for the user.
+     * The attributes that should be cast.
      *
-     * @return string
+     * @var array<string, string>
      */
-    public function getAuthPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Get the remember token for the user.
-     *
-     * @return string|null
-     */
-//    public function getRememberToken()
-//    {
-//        return $this->remember_token;
-//    }
-//
-//    /**
-//     * Set the remember token for the user.
-//     *
-//     * @param  string  $value
-//     * @return void
-//     */
-//    public function setRememberToken($value)
-//    {
-//        $this->remember_token = $value;
-//    }
-//
-//    /**
-//     * Get the column name for the "remember me" token.
-//     *
-//     * @return string
-//     */
-//    public function getRememberTokenName()
-//    {
-//        return 'remember_token';
-//    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }

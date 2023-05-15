@@ -7,13 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rent extends Model
 {
-    use HasFactory;
+    protected $table = 'rent';
+
     protected $fillable = [
-        'rental_date',
+        'rent_date',
         'return_date',
         'price',
         'user_id',
         'car_id',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function car()
+    {
+        return $this->belongsTo(Car::class);
+    }
+
 
 }

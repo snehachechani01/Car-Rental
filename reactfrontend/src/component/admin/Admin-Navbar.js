@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
-// import { API_URL } from '../../src/utils/value.js';
-
+import './css/Navbar-admin.css';
+import { API_URL } from '../../utils/value.js'
 import React from "react";
 import axios from 'axios';
 
-const Navbar = () => {
-
+const AdminNavbar = () => {
   const handleLogout = () => {
-    axios.post(`http://localhost:8000/api/logout`).then(() => {
+    axios.post(`${API_URL}/logout`).then(() => {
       // Remove any items from local storage
       localStorage.clear();
       sessionStorage.clear();
@@ -19,28 +18,26 @@ const Navbar = () => {
   };
   
 
-
   return (
     <>
-      <nav>
+      <nav className="admin-nav">
         <div className="logo-container">
-          <Link to="/home">
+          <Link to="/">
             <div className="logo">
-              <a href="#">CAR RENTALS</a>
+              <a href="#">Car2Go</a>
             </div>
           </Link>
         </div>
         <ul className="list-nav">
           <li>
-            <Link to="/home">Home</Link>
+            <Link to="/admin">Home</Link>
           </li>
           <li>
-            <Link to="/cars">Cars</Link>
+            <Link to="/add">Add Car</Link>
           </li>
           <li>
-            <Link to="/booked">Booked Cars</Link>
+            <Link to="/live">Live Status</Link>
           </li>
-
           <li>
             <a href="#" onClick={handleLogout}>Logout</a>
           </li>
@@ -50,4 +47,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default AdminNavbar;

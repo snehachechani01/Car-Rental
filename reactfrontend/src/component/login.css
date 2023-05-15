@@ -1,0 +1,12 @@
+@media only screen and (max-width: 600px){
+.loginform{
+  max-width: 100%;
+  padding: 50px;
+}}
+
+  @media (max-width: 576px){
+h1 {
+  font-size: 4rem !important;
+  text-align: center;
+}
+  }

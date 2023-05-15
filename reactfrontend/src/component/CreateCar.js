@@ -7,9 +7,10 @@ const CreateCar = () => {
   const [model, setModel] = useState('');
   const [price, setPrice] = useState('');
   const [fuelType, setFuelType] = useState(''); // set initial value to 'petrol'
-  const [gearbox, setGearbox] = useState(''); 
-  const [availability, setAvailability] = useState(0);
+  const [gearbox, setGearbox] = useState('');
+  const [availability, setAvailability] = useState(false);
   const [photo, setPhoto] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,25 +29,73 @@ const CreateCar = () => {
         console.log(response.data);
         // Redirect to the car table page
         window.location.href = '/CarTable';
+        alert('Car created successfully!');
       })
       .catch(error => {
         console.log(error);
       });
   };
 
+  const validateForm = () => {
+    let errors = {};
+    let isValid = true;
+
+    if (!brand) {
+      errors.brand = 'Please enter a brand name';
+      isValid = false;
+    }
+
+    if (!model) {
+      errors.model = 'Please enter a car model';
+      isValid = false;
+    }
+
+    if (!price) {
+      errors.price = 'Please enter a price';
+      isValid = false;
+    }
+
+    if (isNaN(price)) {
+      errors.price = 'Please enter a valid price';
+      isValid = false;
+    }
+
+    if (!fuelType) {
+      errors.fuelType = 'Please select a fuel type';
+      isValid = false;
+    }
+
+    if (!gearbox) {
+      errors.gearbox = 'Please select a gearbox';
+      isValid = false;
+    }
+
+    if (!photo) {
+      errors.photo = 'Please select a photo';
+      isValid = false;
+    }
+
+    setErrors(errors);
+
+    return isValid;
+  };
+
   return (
     <form onSubmit={handleSubmit} className="create-car-form">
       <div className="container">
         <label htmlFor="brand">Car Brand Name:</label>
-        <input type="text" id="brand" name="brand"  className="form-control" value={brand} onChange={(e) => setBrand(e.target.value)} required />
+        <input type="text" id="brand" name="brand" className="form-control" value={brand} onChange={(e) => setBrand(e.target.value)} required />
+        {errors.brand && <span className="error">{errors.brand}</span>}
       </div>
       <div className="container">
         <label htmlFor="model">Car Model:</label>
-        <input type="text" id="model" name="model"   className="form-control"value={model} onChange={(e) => setModel(e.target.value)} required />
+        <input type="text" id="model" name="model" className="form-control" value={model} onChange={(e) => setModel(e.target.value)} required />
+        {errors.model && <span className="error">{errors.model}</span>}
       </div>
       <div className="container">
         <label htmlFor="price">Car Price per day for rental:</label>
-        <input type="number" id="price" name="price"  className="form-control" value={price} onChange={(e) => setPrice(e.target.value)} required />
+        <input type="number" id="price" name="price" className="form-control" value={price} onChange={(e) => setPrice(e.target.value)} required />
+        {errors.price && <span className="error">{errors.price}</span>}
       </div>
       <div className="container">
         <label htmlFor="fuelType">Car fuel type:</label>
@@ -54,6 +103,7 @@ const CreateCar = () => {
           <option value="">Select fuel type</option>
           <option value="petrol">Petrol</option>
           <option value="diesel">Diesel</option>
+          {errors.fuelType && <span className="error">{errors.fuelType}</span>}
         </select>
       </div>
 
@@ -63,6 +113,7 @@ const CreateCar = () => {
           <option value="">Select gearbox</option>
           <option value="electric">Electric</option>
           <option value="manual">Manual</option>
+          {errors.gearbox && <span className="error">{errors.gearbox}</span>}
         </select>
       </div>
 
@@ -74,6 +125,7 @@ const CreateCar = () => {
       <div className="container">
         <label htmlFor="photo">Car Photo:</label>
         <input type="file" id="photo" name="photo"  className="form-control" onChange={(e) => setPhoto(e.target.files[0])} required />
+        {errors.photo && <span className="error">{errors.photo}</span>}
       </div>
       <button type="submit">Create Car</button>
     </form>

@@ -14,10 +14,14 @@ function Home() {
       .then(data => setCars(data))
       .catch(error => console.log(error));
   }, []);
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    window.location.href = '/login';
+  }
 
   return (
     <div className="home">
-      <Navigation />
+    <Navigation handleLogout={handleLogout} />
       <Carousel>
         <Carousel.Item>
           <img
