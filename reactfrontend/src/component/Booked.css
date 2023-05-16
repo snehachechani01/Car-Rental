@@ -1,0 +1,15 @@
+
+
+.booked-main{
+    height: 100vh;
+    background: white;
+    width: 100%;
+}
+
+.h1-booked{
+    text-align: center;
+    height: 100vh;
+}
+.container-booked{
+    min-height: 100vh;
+}
