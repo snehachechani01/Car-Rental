@@ -1,0 +1,48 @@
+.car-list {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  .create-car-button {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .img-thread img {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Responsive Styles */
+  @media screen and (max-width: 768px) {
+    .car-list {
+      overflow-x: auto;
+    }
+    
+    table {
+      font-size: 14px;
+    }
+    
+    th, td {
+      padding: 8px;
+    }
+    
+    .create-car-button {
+      font-size: 14px;
+    }
+  }
+  

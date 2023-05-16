@@ -1,43 +1,43 @@
 .create-car-form {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.container {
-  width: 90%;
-  margin: 0.5rem;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.25rem;
-}
-
-input,
-select,
-button {
-  width: 100%;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  border: 1px solid #ccc;
-}
-
-button {
-  margin-top: 1rem;
-  background-color: blue;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-@media (min-width: 576px) {
-  .create-car-form {
-    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   
   .container {
-    width: 45%;
+    width: 90%;
     margin: 0.5rem;
   }
-}
+  
+  label {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  
+  input,
+  select,
+  button {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    margin-top: 1rem;
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  @media (min-width: 576px) {
+    .create-car-form {
+      max-width: 600px;
+    }
+    
+    .container {
+      width: 45%;
+      margin: 0.5rem;
+    }
+  }

@@ -1,0 +1,9 @@
+.footer1 {
+    background-color: grey;
+    color: #333;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 495px;
+  }

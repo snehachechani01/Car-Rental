@@ -31,12 +31,9 @@ const Navbar = () => {
           </Link>
         </div>
         <ul className="list-nav">
-          <li>
-            <Link to="/home">Home</Link>
-          </li>
-          <li>
-            <Link to="/cars">Cars</Link>
-          </li>
+          
+        
+          
           <li>
             <Link to="/booked">Booked Cars</Link>
           </li>

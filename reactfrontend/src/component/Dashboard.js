@@ -4,7 +4,6 @@ import Carousel from 'react-bootstrap/Carousel';
 import './Dashboard.css';
 import Navigation from './Navigation';
 
-
 function Home() {
   const [cars, setCars] = useState([]);
 
@@ -14,10 +13,23 @@ function Home() {
       .then(data => setCars(data))
       .catch(error => console.log(error));
   }, []);
+
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
+    localStorage.clear();
+    sessionStorage.clear();
     window.location.href = '/login';
   }
+
+  // Check if the user is authorized
+  const isUser = sessionStorage.getItem('isUser');
+
+  // Redirect unauthorized users to the login page
+  useEffect(() => {
+    if (!isUser) {
+      alert("unauthorized user, please login first")
+      window.location.href = '/login';
+    }
+  }, [isUser]);
 
   return (
     <div className="home">

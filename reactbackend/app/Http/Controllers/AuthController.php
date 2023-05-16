@@ -17,12 +17,12 @@ class AuthController extends Controller
             if ($user->is_admin) {
                 return response()->json([
                     'success' => true,
-                    'redirectTo' => '/admin/dashboard' // Redirect to admin dashboard
+                    'redirectTo' => 'cartable'
                 ]);
             } else {
                 return response()->json([
                     'success' => true,
-                    'redirectTo' => '/' // Redirect to website home page
+                    'redirectTo' => '/'
                 ]);
             }
         } else {

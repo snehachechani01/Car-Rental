@@ -19,11 +19,8 @@ const Login = () => {
       const response = await axios.post('http://localhost:8000/api/login', data);
       console.log("data",response.data);
       sessionStorage.setItem('userId', response.data.user_id);
-      sessionStorage.setItem('isUser', true);
-
 
       if (response.data.isAdmin===true) {
-        sessionStorage.setItem('isAdmin', true);
         navigate('/CarTable');
       } else {
         navigate('/Dashboard');
