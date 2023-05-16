@@ -50,6 +50,9 @@ const CarList = () => {
       <Link to="/CreateCar" className="create-car-button">
         Create Car
       </Link>
+      <li>
+            <Link to="/live">Live Cars</Link>
+          </li>
       <table>
         <thead>
           <tr>
