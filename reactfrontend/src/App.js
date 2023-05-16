@@ -5,7 +5,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Registration from "./component/Registration";
 import Login from "./component/Login";
 // import Header from "./component/Header";
-// import Booked from "./component/Booked";
+import Booked from "./component/Booked";
 import Dashboard from "./component/Dashboard";
 // import Admin from "./component/Admin";
 import CarTable from "./component/CarTable";
@@ -14,6 +14,7 @@ import CarEdit from "./component/CarEdit";
 // import Navigation from './component/Navigation';
 import Rent from "./component/Rent";
 import RentalDetails from "./component/RentalDetails";
+import LiveRented from "./component/Live";
 
 const App = () => {
   return (
@@ -33,7 +34,8 @@ const App = () => {
             <Route path="/CarEdit/:carId/edit" element={<CarEdit />} />
             <Route path="/Rent" element={<Rent />} />
             <Route path="/RentalDetails" element={<RentalDetails />} />
-            {/* <Route path="/booked" element={<Booked />} /> */}
+            <Route path="/booked" element={<Booked />} />
+            <Route path="/live" element={<LiveRented />} />
 
     </Routes>
   </BrowserRouter>

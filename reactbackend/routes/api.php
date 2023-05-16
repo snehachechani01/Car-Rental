@@ -28,9 +28,12 @@ Route::get('/cars/{id}', [CarController::class,'edit']);
 Route::any('/cars/{carId}/edit', [CarController::class,'update']);
 Route::delete('/cars/{id}', [CarController::class,'destroy']);
 Route::post('/rentals', [RentController::class, 'store']);
+Route::get('/booked', [RentController::class, 'getDataByUserId']);
+Route::get('/live', [RentController::class, 'booked']);
 
 
-Route::put('/rentals/{id}/end', [RentController::class, 'endRental']);
+Route::POST('/remove/{id}', [RentController::class, 'destroy'])->name('rent.destroy');
+
 
 
 Route::POST('logout', [UserController::class, 'logout'])->name('logout');

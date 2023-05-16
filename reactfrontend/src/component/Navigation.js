@@ -37,7 +37,9 @@ const Navbar = () => {
           <li>
             <Link to="/booked">Booked Cars</Link>
           </li>
-
+          <li>
+            <Link to="/live">Live Cars</Link>
+          </li>
           <li>
             <a href="#" onClick={handleLogout}>Logout</a>
           </li>

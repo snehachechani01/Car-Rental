@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Rent;
+use App\Models\Car;
+
+use Illuminate\Support\Facades\DB;
 
 class RentController extends Controller
 {
+    public function index()
+    {
+        // Get all available cars
+        $cars = Car::where('available', true)->get();
+
+        return response()->json($cars);
+    }
 
     public function create(Request $request)
     {
@@ -24,18 +34,20 @@ class RentController extends Controller
 
     public function Booked()
     {
-        $cars = Car::join('rent', 'cars.id', '=', 'rent.car_id')
-            ->join('users', 'rent.user_id', '=', 'users.id')
-            ->where('cars.available', 0)
+        $cars = Car::join('rents', 'cars.id', '=', 'rents.car_id')
+            ->join('users', 'rents.user_id', '=', 'users.id')
+            ->where('cars.availability', 0)
             ->select('cars.*',
-                DB::raw('DATEDIFF(rent.return_date, rent.rent_date) AS rent_duration'),
-                'users.name as user_name', 'rent.return_date')
+                DB::raw('DATEDIFF(rents.return_date, rents.rental_date) AS rents_duration'),
+                'users.name as user_name', 'rents.return_date')
             ->get();
 
         return response()->json($cars);
     }
     public function store(Request $request)
     {
+
+
         $validatedData = $request->validate([
             'rental_date' => 'required|date',
             'return_date' => 'required|date',
@@ -43,6 +55,9 @@ class RentController extends Controller
             'user_id' => 'required',
             'car_id' => 'required',
         ]);
+        $car = Car::findOrFail($validatedData['car_id']);
+        $car->availability = false;
+        $car->save();
 
         $rental = new Rent([
             'rental_date' => $validatedData['rental_date'],
@@ -51,6 +66,7 @@ class RentController extends Controller
             'user_id' => $validatedData['user_id'],
             'car_id' => $validatedData['car_id'],
         ]);
+
         $rental->save();
 
         return response()->json($rental);
@@ -59,11 +75,11 @@ class RentController extends Controller
     {
         $userId = $request->query('userid');
 
-        $data = DB::table('rent')
-            ->join('cars', 'rent.car_id', '=', 'cars.id')
-            ->select('rent.*', 'cars.brand', 'cars.model', 'cars.image')
-            ->where('rent.user_id', $userId  )
-            ->where('cars.available', false)
+        $data = DB::table('rents')
+            ->join('cars', 'rents.car_id', '=', 'cars.id')
+            ->select('rents.*', 'cars.brand', 'cars.model')
+            ->where('rents.user_id', 2  )
+            ->where('cars.availability', false)
             ->get();
 
         return response()->json($data);
@@ -89,16 +105,25 @@ class RentController extends Controller
         $rental->delete();
         return response()->json(null, 204);
     }
-    public function endRental($id)
+    public function destroy($id)
     {
-        $rental = Rental::findOrFail($id);
+        $car = Car::find($id);
 
-        $rental->return_date = now();
-        $rental->total_price = $this->calculateTotalPrice($rental->rental_date, $rental->return_date, $rental->car->price_per_day);
-        $rental->save();
+        if (!$car) {
+            return response()->json(['success' => false, 'message' => 'Car not found.']);
+        }
 
-        return response()->json(['message' => 'Rental has been ended.']);
+        // Set available to true
+        $car->availability = true;
+        $car->save();
+
+        // Delete entries from the "rent" table with the same car_id
+        Rent::where('car_id', $car->id)->delete();
+
+        return response()->json(['success' => true, 'message' => 'Rent entries deleted successfully.']);
     }
+
+
 
     private function calculateTotalPrice($rentalDate, $returnDate, $pricePerDay)
     {

@@ -8,7 +8,7 @@ function Booked() {
   const [data, setData] = useState([]);
   const navigate = useNavigate()
   const userId = sessionStorage.getItem('userId');
-  const isUser = sessionStorage.getItem('user');
+  const isUser = sessionStorage.getItem('isUser');
 
   useEffect(() => {
     if(!isUser){
@@ -17,7 +17,7 @@ function Booked() {
     }
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/crondata?userid=${userId}`);
+        const response = await axios.get(`http://localhost:8000/api/booked?userid=${userId}`);
         setData(response.data);
       } catch (error) {
         console.log(error);
@@ -47,7 +47,7 @@ function Booked() {
   return (
     <div className='container-booked'>
     <div className='booked-main'>
-      <Navbar />
+      {/* <Navbar /> */}
         {data.length === 0 && <h1 className='h1-booked'>No car is booked yet</h1>}
         {data.length > 0 && (
           <div className="product-list">
@@ -64,7 +64,7 @@ function Booked() {
         )}
      
     </div>
-    <Footer />
+    {/* <Footer /> */}
     </div>
   );
 }
